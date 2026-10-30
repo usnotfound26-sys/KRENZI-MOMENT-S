@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#211a19">
+  <title>KRENZI MOMENTS — Every Moment Deserves to Be Captured</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" data-go="home" aria-label="KRENZI MOMENTS Home">
+      <span class="brand-mark">K<span>✦</span></span>
+      <span><strong>KRENZI</strong><small>MOMENTS</small></span>
+    </a>
+    <button class="icon-btn" id="fullscreenBtn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
+  </header>
+
+  <main>
+    <section class="screen active" id="homeScreen">
+      <div class="hero">
+        <div class="eyebrow">THE EVENT PHOTO EXPERIENCE</div>
+        <h1>Every moment<br><em>deserves to be captured.</em></h1>
+        <p>Make a little memory. Keep it forever.</p>
+        <button class="primary-btn" data-go="event">START PHOTOBOOTH <span>→</span></button>
+        <div class="hero-note">A little fun, wrapped in a beautiful frame.</div>
+      </div>
+      <div class="home-orbit"><div class="sample-photo"><span>YOUR<br>MOMENT</span></div><div class="orbit-tag">KRENZI<br>MOMENTS</div></div>
+    </section>
+
+    <section class="screen" id="eventScreen">
+      <div class="step-head"><span class="eyebrow">STEP 01 / PERSONALIZE</span><h2>Set the <em>occasion.</em></h2><p>Tambahkan detail acara untuk membuat hasil fotomu lebih personal.</p></div>
+      <div class="panel form-panel">
+        <label>Nama acara <input id="eventName" maxlength="50" placeholder="Contoh: Birthday Party"></label>
+        <label>Tanggal acara <input id="eventDate" type="date"></label>
+        <label>Pesan kecil (opsional) <input id="eventNote" maxlength="70" placeholder="A night to remember"></label>
+        <div class="actions"><button class="ghost-btn" data-go="home">Kembali</button><button class="primary-btn" data-go="frames">Pilih Frame →</button></div>
+      </div>
+    </section>
+
+    <section class="screen" id="framesScreen">
+      <div class="step-head"><span class="eyebrow">STEP 02 / YOUR STYLE</span><h2>Choose your <em>frame.</em></h2><p>Pilih desain frame. Susunan foto bisa kamu tentukan di langkah berikutnya.</p></div>
+      <div class="frame-grid" id="frameGrid"></div>
+      <div class="sticky-actions"><button class="ghost-btn" data-go="event">Kembali</button><button class="primary-btn" id="toLayoutsBtn">Lanjut ke Layout →</button></div>
+    </section>
+
+    <section class="screen" id="layoutsScreen">
+      <div class="step-head"><span class="eyebrow">STEP 03 / PHOTO ARRANGEMENT</span><h2>Choose your <em>layout.</em></h2><p>Frame dan layout adalah dua pilihan terpisah. Tidak ada susunan 2×2 yang diwajibkan.</p></div>
+      <div class="selected-summary" id="selectedFrameSummary"></div>
+      <div class="layout-grid" id="layoutGrid"></div>
+      <div class="sticky-actions"><button class="ghost-btn" data-go="frames">Kembali</button><button class="primary-btn" data-go="camera">Open Camera →</button></div>
+    </section>
+
+    <section class="screen" id="cameraScreen">
+      <div class="step-head compact"><span class="eyebrow">STEP 04 / CAMERA STUDIO</span><h2>Your moment, <em>your way.</em></h2><p id="cameraHint">Izinkan akses kamera untuk mulai mengambil foto.</p></div>
+      <div class="studio">
+        <div class="camera-wrap">
+          <video id="video" autoplay playsinline muted></video>
+          <canvas id="captureCanvas" hidden></canvas>
+          <div class="camera-overlay" id="cameraOverlay"><span>CAMERA PREVIEW</span></div>
+          <div class="countdown" id="countdown"></div>
+        </div>
+        <div class="camera-controls">
+          <div class="filter-row" id="filterRow">
+            <button class="filter-chip selected" data-filter="none">Original</button>
+            <button class="filter-chip" data-filter="warm">Warm</button>
+            <button class="filter-chip" data-filter="mono">Mono</button>
+            <button class="filter-chip" data-filter="soft">Soft</button>
+            <button class="filter-chip" data-filter="vivid">Vivid</button>
+          </div>
+          <div class="camera-actions">
+            <button class="ghost-btn" id="startCameraBtn">Aktifkan Kamera</button>
+            <button class="primary-btn" id="captureBtn" disabled>● Ambil Foto</button>
+          </div>
+          <div class="shot-status" id="shotStatus">0 foto diambil</div>
+          <div class="thumbs" id="thumbs"></div>
+        </div>
+      </div>
+      <div class="sticky-actions"><button class="ghost-btn" data-go="layouts">Kembali</button><button class="primary-btn" id="toResultBtn" disabled>Lihat Hasil →</button></div>
+    </section>
+
+    <section class="screen" id="resultScreen">
+      <div class="step-head"><span class="eyebrow">STEP 05 / YOUR KRENZI MOMENT</span><h2>Made to <em>remember.</em></h2><p>Periksa hasilnya. Kamu bisa mengulang foto sebelum menyimpan.</p></div>
+      <div class="result-layout">
+        <div class="result-preview"><canvas id="resultCanvas" width="900" height="1200"></canvas></div>
+        <div class="result-tools panel">
+          <h3>Your photo is ready.</h3>
+          <p id="resultDescription">Hasil photobooth kamu sudah disusun.</p>
+          <button class="primary-btn full" id="downloadBtn">Download PNG ↓</button>
+          <button class="secondary-btn full" id="shareBtn">Share photo ↗</button>
+          <hr>
+          <h3>Send to email</h3>
+          <p class="small">Kirim hasil foto sebagai lampiran melalui layanan email yang dikonfigurasi oleh pemilik website.</p>
+          <label>Email penerima<input id="recipientEmail" type="email" placeholder="nama@email.com"></label>
+          <button class="secondary-btn full" id="emailBtn">Send to Email</button>
+          <div class="status" id="emailStatus" role="status"></div>
+          <p class="tiny">Fitur email otomatis memerlukan backend aman. Lihat README untuk konfigurasi.</p>
+          <button class="text-btn" id="retakeAllBtn">← Ambil ulang foto</button>
+        </div>
+      </div>
+      <div class="sticky-actions"><button class="ghost-btn" data-go="home">Selesai</button><button class="primary-btn" id="newSessionBtn">Buat Sesi Baru ↗</button></div>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> KRENZI MOMENTS · EVERY MOMENT DESERVES TO BE CAPTURED</footer>
+  <script src="script.js"></script>
+</body>
+</html>
